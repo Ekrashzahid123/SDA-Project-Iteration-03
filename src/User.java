@@ -1,15 +1,5 @@
-/*Main class                                    passanger extends user                                   Driver extends user
- 
-1..User                                        bookRide(pickuplocation,dropofflocation)               acceptRide(rideId)
-attributes
-struing id                                     makepayment(paymentMethod)                             rejectRide(rideId)         
-string name
-string email                                   Trackdriver(DriverId)                                  updateLocation(passengerId)
-string phone
-string passward                                rateDriver(rating,feedback)                            ratePassanger(rating,feedback)
-fun Manageprofile()
 
-*/ 
+
 //Work done by Ekrash Zahid
  class User {
  private String id;
@@ -77,6 +67,7 @@ fun Manageprofile()
 
  public void ManageProfile(String NewName,String Newemail,String id)
  {
+   
     setName(NewName);
     setemail(Newemail);
     setId(id);
