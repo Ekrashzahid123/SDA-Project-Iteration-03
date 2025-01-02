@@ -1,88 +1,101 @@
-/*Main class                                    passanger extends user                                   Driver extends user
- 
-1..User                                        bookRide(pickuplocation,dropofflocation)               acceptRide(rideId)
-attributes
-struing id                                     makepayment(paymentMethod)                             rejectRide(rideId)         
-string name
-string email                                   Trackdriver(DriverId)                                  updateLocation(passengerId)
-string phone
-string passward                                rateDriver(rating,feedback)                            ratePassanger(rating,feedback)
-fun Manageprofile()
+import java.util.Scanner;
 
-*/ 
-//Work done by Ekrash Zahid
-//Fork by Abrar Tahir123
- class User {
- private String id;
- private String name;
- private String email;
- private String phone;
- private String password;
+public class user {
 
- public User()
- {
-    id=" ";
-    name=" ";
-    email=" ";
-    phone=" ";
-    password=" ";
- }
- public User(String id, String name, String email, String phone, String password)
- {
-    this.id=id;
-    this.name=name;
-    this.email=email;
-    this.phone=phone;
-    this.password=password;
- }
- public String getId()
- {
-    return id;
- }
- public void setId(String id)
- {
-    this.id=id;
- }
- public String getName()
- {
-    return name;
- }
- public void setName(String name)
- {
-    this.name=name;
- }
- public  String getemail()
- {
-    return email;
- }
- public void setemail(String email)
- {
-    this.email=email;
- }
- public String getphone()
- {
-    return phone;
- }
- public void setphone(String phone)
- {
-    this.phone=phone;
- }
- public String getPassward()
- {
-    return password;
- }
- public void setPassward(String password)
- {
-    this.password=password;
- }
+    private String id;
+    private String name;
+    private String email;
+    private int phone;
+    private String password;
 
- public void ManageProfile(String NewName,String Newemail,String id)
- {
-    setName(NewName);
-    setemail(Newemail);
-    setId(id);
-    System.out.println("Profile Update"+ getName()+getemail()+getId());
-}
+    public user(String id, String name, String email, int phone, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+    }
 
+    // Accessors
+    public String getID() {
+        return id;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    // Mutators
+    public void setID(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    // Mehods
+    public void manageProfile() {
+        Scanner input = new Scanner(System.in);
+        int choice;
+
+        System.out.println("Managing profile for user: " + name);
+        System.out.println("1. Update Name");
+        System.out.println("2. Update Email");
+        System.out.println("3. Update Phone");
+        System.out.println("4. Update Password");
+        System.out.println("Enter your choice: ");
+
+        choice = input.nextInt();
+
+        switch (choice) {
+            case 1:
+                System.out.print("Enter new name: ");
+                this.name = input.nextLine();
+                break;
+            case 2:
+                System.out.print("Enter new email: ");
+                this.email = input.nextLine();
+                break;
+            case 3:
+                System.out.print("Enter new phone: ");
+                this.phone = input.nextInt();
+                break;
+            case 4:
+                System.out.print("Enter new password: ");
+                this.password = input.nextLine();
+                break;
+            default:
+                System.out.println("Invalid choice.");
+                break;
+        }
+
+        input.close();
+
+        System.out.println("Successfully Updated");
+    }
 }
