@@ -20,7 +20,7 @@ public Ride(String id,String passangerId,String DriverId,String pickuplocation,S
     this.status=status;
     this.fare=fare;
     this.estimatedArrivalTime=estimatedArrivalTime;
-    //Rest of code remian 
+    //Rest of code remian will be start from tommorrow
 
 }
 }
