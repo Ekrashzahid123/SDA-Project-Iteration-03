@@ -19,6 +19,4 @@ public class Passanger extends User {
         System.out.println("Rating driver with " + rating + " stars. Feedback: " + feedback);
     }
 }
-//done by Ekrash 
-
-
+// done by Ekrash

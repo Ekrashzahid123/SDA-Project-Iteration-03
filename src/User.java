@@ -5,10 +5,10 @@ public class User {
     private String id;
     private String name;
     private String email;
-    private int phone;
+    private String phone;
     private String password;
 
-    public User(String id, String name, String email, int phone, String password) {
+    public User(String id, String name, String email, String phone, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -29,7 +29,7 @@ public class User {
         return email;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -50,7 +50,7 @@ public class User {
         this.email = email;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -72,7 +72,7 @@ public class User {
 
         choice = input.nextInt();
 
-        switch (choice) {
+        switch(choice) {
             case 1:
                 System.out.print("Enter new name: ");
                 this.name = input.nextLine();
@@ -83,7 +83,7 @@ public class User {
                 break;
             case 3:
                 System.out.print("Enter new phone: ");
-                this.phone = input.nextInt();
+                this.phone = input.nextLine();
                 break;
             case 4:
                 System.out.print("Enter new password: ");
