@@ -25,7 +25,6 @@ public class Ride {
     //Rest of code remian will be start from tommorrow// staring by Ekrash on 4 Dec 2024 
 
 
-
 //Accessors
 public String getRideID() {
     return rideID;
