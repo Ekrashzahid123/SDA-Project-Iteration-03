@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Driver extends User{
+public class Driver extends User {
 
     private List<Ride> assignedRides;
     String currentLocation;
@@ -12,7 +12,7 @@ public class Driver extends User{
         this.currentLocation = currentLocation;
     }
 
-    //Accessor
+    // Accessor
     public List<Ride> getAssignedRides() {
         return assignedRides;
     }
@@ -21,7 +21,7 @@ public class Driver extends User{
         return currentLocation;
     }
 
-    //Mutator
+    // Mutator
     public void setAssignedRides(List<Ride> assignedRides) {
         this.assignedRides = assignedRides;
     }
@@ -30,7 +30,7 @@ public class Driver extends User{
         this.currentLocation = currentLocation;
     }
 
-    //Methods
+    // Methods
     public void assignRide(Ride ride) {
         assignedRides.add(ride);
     }
@@ -41,9 +41,9 @@ public class Driver extends User{
     }
 
     public void trackPassenger(String passengerID) {
-        
+
         int found = 0;
-    
+
         for (Ride ride : this.assignedRides) {
             if (ride.getPassenger().getID().equals(passengerID)) {
                 found = 1;
@@ -57,5 +57,5 @@ public class Driver extends User{
             System.out.println("No Passenger found with the ID: " + passengerID);
         }
     }
-    
+
 }

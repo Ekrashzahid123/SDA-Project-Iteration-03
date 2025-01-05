@@ -69,7 +69,7 @@ public class Payment {
 
     // Methods
     public void processPayment() {
-        // Simulate processing payment
+       
         if ("Pending".equals(this.status)) {
             this.status = "Completed";
             System.out.println("Payment processed successfully for Payment ID: " + paymentID);

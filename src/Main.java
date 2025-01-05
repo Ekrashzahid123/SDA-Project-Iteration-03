@@ -6,10 +6,10 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        // Create Admin
+        
         Admin admin = new Admin("1", "Admin Name");
 
-        // Menu loop for testing
+
         int choice;
         do {
             System.out.println("\nSelect an option:");
@@ -23,13 +23,14 @@ public class Main {
             System.out.println("8. Complete Ride");
             System.out.println("9. Exit");
             choice = input.nextInt();
-            input.nextLine(); // Consume newline character after nextInt()
+            input.nextLine(); 
+            //Rest of code will be DOne By Abrar ,will be sending  pull request 
 
             switch (choice) {
-                case 1: // Admin - Manage Users
-                    admin.manageUsers(); // This will allow the admin to add passengers/drivers dynamically
+                case 1: 
+                    admin.manageUsers(); 
                     break;
-                case 2: // Passenger - Book Ride
+                case 2: 
                     System.out.println("Select a passenger to book a ride:");
                     for (int i = 0; i < admin.getPassengers().size(); i++) {
                         System.out.println((i + 1) + ". " + admin.getPassengers().get(i).getName());
@@ -44,7 +45,7 @@ public class Main {
 
                     Passenger selectedPassenger = admin.getPassengers().get(passengerChoice - 1);
 
-                    // Check for ongoing ride immediately after selecting the passenger
+                    
                     boolean hasOngoingRide = false;
                     for (Ride ride : selectedPassenger.getRides()) {
                         if (ride.getStatus().equalsIgnoreCase("In Progress")) {
@@ -56,7 +57,7 @@ public class Main {
                     }
 
                     if (hasOngoingRide == true) {
-                        break; // Exit the case since booking cannot proceed
+                        break; 
                     }
 
                     System.out.println("Select a driver for the ride:");
@@ -73,59 +74,58 @@ public class Main {
 
                     Driver selectedDriver = admin.getDrivers().get(driverChoice - 1);
 
-                    input.nextLine(); // Consume newline
+                    input.nextLine(); 
                     System.out.print("Enter pickup location: ");
                     String pickupLocation = input.nextLine();
                     System.out.print("Enter dropoff location: ");
                     String dropoffLocation = input.nextLine();
 
                     LocalDateTime estimatedArrival = LocalDateTime.now().plusMinutes(30); // Example time
-                    double fare = 500; // Example fare calculation
+                    double fare = 500; 
 
                     selectedPassenger.bookRide(pickupLocation, dropoffLocation, selectedDriver, fare, estimatedArrival);
                     System.out.println("Ride booked successfully for " + selectedPassenger.getName() + " with driver "
                             + selectedDriver.getName());
 
                     break;
-                case 3: // Driver - Track Passenger
-                    // Driver tracks passenger by ID
+                case 3: 
                     if (!admin.getPassengers().isEmpty()) {
                         System.out.print("Enter Passenger ID to track: ");
                         String passengerID = input.nextLine();
-                        Driver driver = admin.getDrivers().get(0); // Example driver tracking the passenger
+                        Driver driver = admin.getDrivers().get(0); 
                         driver.trackPassenger(passengerID);
                     } else {
                         System.out.println("No passengers available to track.");
                     }
                     break;
-                case 4: // Passenger - Track Driver
-                    // Passenger tracks driver by ID
+                case 4: 
+                    
                     if (!admin.getDrivers().isEmpty()) {
                         System.out.print("Enter Driver ID to track: ");
                         String driverID = input.nextLine();
-                        Passenger passenger = admin.getPassengers().get(0); // Example passenger tracking driver
+                        Passenger passenger = admin.getPassengers().get(0); 
                         passenger.trackDriver(driverID);
                     } else {
                         System.out.println("No drivers available to track.");
                     }
                     break;
-                case 5: // Admin - Handle Disputes
-                    admin.handleDisputes(); // Admin handling disputes
+                case 5:
+                    admin.handleDisputes(); 
                     break;
-                case 6: // Admin - View System Statistics
-                    admin.viewSystemStatistics(); // Admin viewing system stats
+                case 6:
+                    admin.viewSystemStatistics(); 
                     break;
-                case 7: // Passenger - Track Ride
-                    // Passenger tracks ride by ID
+                case 7: 
+                   
                     if (!admin.getPassengers().isEmpty()) {
                         System.out.print("Enter Ride ID to track: ");
                         String rideID = input.nextLine();
-                        Passenger passenger = admin.getPassengers().get(0); // Example passenger tracking ride
+                        Passenger passenger = admin.getPassengers().get(0); 
                         passenger.trackRide(rideID);
                     }
                     break;
-                case 8: // Complete Ride
-                    // Example ride completion
+                case 8: 
+                    
                     if (!admin.getPassengers().isEmpty()) {
                         Passenger passenger = admin.getPassengers().get(0);
                         if (!passenger.getRides().isEmpty()) {
@@ -134,7 +134,7 @@ public class Main {
                         }
                     }
                     break;
-                case 9: // Exit
+                case 9: 
                     System.out.println("Exiting...");
                     break;
                 default:
