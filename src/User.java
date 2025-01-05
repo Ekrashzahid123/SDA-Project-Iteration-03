@@ -93,7 +93,6 @@ public class User {
                 System.out.println("Invalid choice.");
                 break;
         }
-
         input.close();
         System.out.println("Successfully Updated");
     }
