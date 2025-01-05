@@ -95,7 +95,6 @@ public class User {
         }
 
         input.close();
-
         System.out.println("Successfully Updated");
     }
 }
