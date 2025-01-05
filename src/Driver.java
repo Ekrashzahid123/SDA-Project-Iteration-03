@@ -56,5 +56,4 @@ public class Driver extends User {
             System.out.println("No Passenger found with the ID: " + passengerID);
         }
     }
-
 }
