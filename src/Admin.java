@@ -165,7 +165,7 @@ public class Admin {
                 break;
         }
     }
-    //Extra functions
+
     public void handleDisputes() {
         System.out.println("Admin: " + getName() + "is handling disputes...");
     }
