@@ -5,8 +5,8 @@ public class Payment {
     private String rideID;
     private double amount;
     private LocalDateTime paymentDate;
-    private String paymentMethod; // e.g., "Credit Card", "Cash", "PayPal"
-    private String status; // e.g., "Pending", "Completed", "Failed"
+    private String paymentMethod; //Such as PayPal, Cash etc.
+    private String status; //Could be "Pending" or "Done"
 
     public Payment(String paymentID, String rideID, double amount, LocalDateTime paymentDate, String paymentMethod, String status) {
         this.paymentID = paymentID;
