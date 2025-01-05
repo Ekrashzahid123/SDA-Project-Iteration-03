@@ -165,11 +165,11 @@ public class Admin {
                 break;
         }
     }
-
+    //Extra functions
     public void handleDisputes() {
         System.out.println("Admin: " + getName() + "is handling disputes...");
     }
-
+    
     public void viewSystemStatistics() {
         System.out.println("Admin: " + getName() + "is viewing system statistics...");
     }
