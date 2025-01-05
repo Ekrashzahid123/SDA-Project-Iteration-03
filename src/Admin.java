@@ -162,6 +162,6 @@ public class Admin {
                 System.out.println("Invalid choice.");
                 break;
         }
-        input.close();
+         input.close();
     }
 }
