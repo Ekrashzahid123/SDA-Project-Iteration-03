@@ -16,7 +16,7 @@ public class User {
         this.password = password;
     }
 
-    // Accessors                           //iteration 3
+    // Accessors                         
     public String getID() {
         return id;
     }
