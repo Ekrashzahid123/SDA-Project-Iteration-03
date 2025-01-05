@@ -33,7 +33,7 @@ public class Passenger extends User {
 
     public void trackRide(String id) {
         for (Ride ride : rides) {
-            if (ride.getRideID() == id) {
+            if (ride.getRideID().equals(id)) {
                 ride.trackRide();
                 return;
             }
