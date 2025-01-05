@@ -141,7 +141,6 @@ public class Main {
                     System.out.println("Invalid choice. Please select again.");
             }
         } while (choice != 9);
-
         input.close();
     }
 }
