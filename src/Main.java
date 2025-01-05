@@ -9,7 +9,6 @@ public class Main {
         
         Admin admin = new Admin("1", "Admin Name");
 
-
         int choice;
         do {
             System.out.println("\nSelect an option:");
