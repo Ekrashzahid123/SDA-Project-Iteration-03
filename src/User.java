@@ -16,7 +16,7 @@ public class User {
         this.password = password;
     }
 
-    // Accessors                         
+    // Accessors
     public String getID() {
         return id;
     }
@@ -72,7 +72,7 @@ public class User {
 
         choice = input.nextInt();
 
-        switch(choice) {
+        switch (choice) {
             case 1:
                 System.out.print("Enter new name: ");
                 this.name = input.nextLine();
@@ -93,8 +93,16 @@ public class User {
                 System.out.println("Invalid choice.");
                 break;
         }
+
         input.close();
+
         System.out.println("Successfully Updated");
     }
+
+    public void displayProfile() {
+        System.out.println("Name: " + name);
+        System.out.println("Email: " + email);
+        System.out.println("Phone: " + phone);
+        System.out.println("Password: " + password);
+    }
 }
-//commit
