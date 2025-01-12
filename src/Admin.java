@@ -27,6 +27,9 @@ public class Admin {
         return instance;
     }
 
+    public Admin() {
+    }
+
     // Accessors
     public String getID() {
         return id;
@@ -142,15 +145,12 @@ public class Admin {
                         User newWheelchairUser = UserFactory.createUser("wheelchair", id, name, email, phone, password,
                                 null);
                         wheelchairUsers.add((WheelchairUser) newWheelchairUser); // Casting to WheelchairUser
-                        System.out.println("Wheelchair User added successfully!");
                         break;
                     }
                     default:
-                        System.out.println("Invalid choice. Please choose Passenger, Driver or Wheelchair User.");
-                        break;
-                }
-                break;
             }
+        }
+
             case 2: {
                 System.out.println("Which user would you like to remove?");
                 System.out.println("1. Passenger");

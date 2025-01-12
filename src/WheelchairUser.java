@@ -37,7 +37,11 @@ public class WheelchairUser extends Passenger {
                 "Payment initialized with a " + (discount * 100) + "% discount. Status: " + payment.getStatus());
     }
 
+<<<<<<< HEAD
    
+=======
+    @Override
+>>>>>>> 705622c526df7063292a3a90da9244b1deafd963
     public void preBookRide(String pickupLocation, String dropoffLocation, Driver driver, double fare,
             int daysInAdvance, PaymentStrategyInterface paymentStrategy) {
         if (!driver.getVehicle().isWheelchairAccessible()) {
