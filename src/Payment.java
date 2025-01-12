@@ -1,20 +1,12 @@
-import java.time.LocalDateTime;
-
 public class Payment {
     private String paymentID;
-    private String rideID;
     private double amount;
-    private LocalDateTime paymentDate;
-    private String paymentMethod; //Such as PayPal, Cash etc.
-    private String status; //Could be "Pending" or "Done"
+    private String status;  // "Pending", "Completed"
 
-    public Payment(String paymentID, String rideID, double amount, LocalDateTime paymentDate, String paymentMethod, String status) {
+    public Payment(String paymentID, double amount) {
         this.paymentID = paymentID;
-        this.rideID = rideID;
         this.amount = amount;
-        this.paymentDate = paymentDate;
-        this.paymentMethod = paymentMethod;
-        this.status = status;
+        this.status = "Pending";  // Initial payment status
     }
 
     // Accessors
@@ -22,72 +14,30 @@ public class Payment {
         return paymentID;
     }
 
-    public String getRideID() {
-        return rideID;
-    }
-
     public double getAmount() {
         return amount;
-    }
-
-    public LocalDateTime getPaymentDate() {
-        return paymentDate;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
     }
 
     public String getStatus() {
         return status;
     }
 
-    // Mutators
+    //Mutators
     public void setPaymentID(String paymentID) {
-        this.paymentID = paymentID;
-    }
-
-    public void setRideID(String rideID) {
-        this.rideID = rideID;
+        this.paymentID=paymentID;
     }
 
     public void setAmount(double amount) {
-        this.amount = amount;
+        this.amount=amount;
     }
-
-    public void setPaymentDate(LocalDateTime paymentDate) {
-        this.paymentDate = paymentDate;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
+    
     public void setStatus(String status) {
-        this.status = status;
+        this.status=status;
     }
 
     // Methods
     public void processPayment() {
-       
-        if ("Pending".equals(this.status)) {
-            this.status = "Completed";
-            System.out.println("Payment processed successfully for Payment ID: " + paymentID);
-        } else {
-            System.out.println("Payment is already " + this.status);
-        }
-    }
-
-    public void displayPaymentDetails() {
-        System.out.println("Payment Details:");
-        System.out.println("Payment ID: " + paymentID);
-        System.out.println("Ride ID: " + rideID);
-        System.out.println("Amount: " + amount);
-        System.out.println("Payment Date: " + paymentDate);
-        System.out.println("Payment Method: " + paymentMethod);
-        System.out.println("Status: " + status);
+        status = "Completed";
+        System.out.println("Payment of " + amount + " has been completed.");
     }
 }
-
-
-////PENDING WORK PATTERN WILL BE IMPLEMENT CONFORMATION FROM COURSE INSTRUCTOR
