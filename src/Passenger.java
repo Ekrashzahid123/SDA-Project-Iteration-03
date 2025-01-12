@@ -49,19 +49,24 @@ public class Passenger extends User {
 
     public void bookRide(String pickupLocation, String dropoffLocation, Driver driver, double fare,
             LocalDateTime estimatedArrivalTime) {
+
+        PaymentStrategyInterface paymentStrategy = new RegularPaymentStrategy(); // Default payment strategy
+
+        // Create the ride and assign payment strategy
         Ride ride = new Ride("Ride" + (rides.size() + 1), this, driver, pickupLocation, dropoffLocation, fare,
                 estimatedArrivalTime, "In Progress", false);
-        Payment payment = new Payment("Payment" + (rides.size() + 1), fare);
+        Payment payment = new Payment("Payment" + (rides.size() + 1), fare, paymentStrategy);
         ride.setPayment(payment);
 
         rides.add(ride);
         driver.assignRide(ride);
+
         System.out.println("Ride booked successfully: " + ride.getRideID());
         System.out.println("Payment initialized. Status: " + payment.getStatus());
     }
 
     public void preBookRide(String pickupLocation, String dropoffLocation, Driver driver, double fare,
-            int daysInAdvance) {
+            int daysInAdvance, PaymentStrategyInterface paymentStrategy) {
 
         // Determine discount based on days in advance
         double discount = 0;
@@ -81,7 +86,7 @@ public class Passenger extends User {
             // Create ride and set payment
             Ride ride = new Ride("PreScheduledRide" + (rides.size() + 1), this, driver, pickupLocation, dropoffLocation,
                     finalFare, LocalDateTime.now().plusDays(daysInAdvance), "Scheduled", true);
-            Payment payment = new Payment("Payment" + (rides.size() + 1), finalFare);
+            Payment payment = new Payment("Payment" + (rides.size() + 1), finalFare, paymentStrategy);
             ride.setPayment(payment);
 
             // Assign ride to passenger and driver
@@ -102,15 +107,17 @@ public class Passenger extends User {
             ride.getDriver().withdraw(advancePayment); // Return the advance payment to the driver
             ride.setStatus("Cancelled");
 
-            System.out.println("Ride canceled successfully. Refund of " + advancePayment + " is issued.");
-            // rides.remove(ride);
+            // Remove from the passenger's ride list
+            rides.remove(ride);
+
+            System.out.println("Pre-scheduled ride canceled. Refund issued: " + advancePayment);
         } else {
             System.out.println("Ride not found or it's not a pre-scheduled ride.");
         }
     }
 
     public void cancelRide(Ride ride) {
-        if (rides.contains(ride) && !ride.isPreScheduled()) { 
+        if (rides.contains(ride) && !ride.isPreScheduled()) {
 
             ride.setStatus("Cancelled");
 
@@ -188,7 +195,6 @@ public class Passenger extends User {
         System.out.println("Ride History for " + getName() + ":");
         System.out.println("=====================================");
 
-        // Check if there are no rides
         if (rides.isEmpty()) {
             System.out.println("No rides found.");
         } else {
@@ -200,8 +206,8 @@ public class Passenger extends User {
                 System.out.println("Pickup Location : " + ride.getPickupLocation());
                 System.out.println("DropOff Location: " + ride.getDropoffLocation());
                 System.out.println("Ride Date     : " + ride.getEstimatedArrivalTime());
-                System.out.println("Driver Name     : " + ride.getDriver().getName());
-                System.out.println("Driver Name     : " + ride.getDriver().getID());
+                System.out.println("Driver Name   : " + ride.getDriver().getName());
+                System.out.println("Driver ID     : " + ride.getDriver().getID());
                 System.out.println("-------------------------------");
             }
         }
