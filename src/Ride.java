@@ -10,11 +10,10 @@ public class Ride {
     private double fare;
     private LocalDateTime estimatedArrivalTime;
     private Payment payment;
-    private boolean isPreBooked;  // New flag to indicate if it's a pre-booked ride
 
     // Constructor
     public Ride(String rideID, Passenger passenger, Driver driver, String pickupLocation, String dropoffLocation,
-                double fare, LocalDateTime estimatedArrivalTime, String status, boolean isPreBooked) {
+                double fare, LocalDateTime estimatedArrivalTime, String status) {
         this.rideID = rideID;
         this.passenger = passenger;
         this.driver = driver;
@@ -24,7 +23,6 @@ public class Ride {
         this.estimatedArrivalTime = estimatedArrivalTime;
         this.status = status;
         this.payment = null;
-        this.isPreBooked = isPreBooked;  // Initialize pre-booked flag
     }
 
     // Accessors
@@ -62,14 +60,6 @@ public class Ride {
 
     public Payment getPayment() {
         return payment;
-    }
-
-    public boolean isPreBooked() {
-        return isPreBooked;
-    }
-
-    public boolean isPreScheduled() {
-        return this.isPreBooked;
     }
 
     // Mutators
@@ -131,14 +121,16 @@ public class Ride {
             System.out.println("Ride is already completed.");
             return;
         }
-
+    
         this.status = "Completed";
         System.out.println("Ride " + this.rideID + " has been completed.");
-
+    
         // Finalize payment if ride is completed
         if (this.payment != null) {
             this.payment.processPayment();
-            if (this.isPreBooked) {
+    
+            // Check if the ride is pre-booked (i.e., status is "Scheduled" or any other value you use)
+            if ("Scheduled".equals(this.status)) {
                 // If the ride was pre-booked, add a small refund or bonus to passenger's wallet
                 double refundAmount = fare * 0.05;  // Refund logic can be adjusted
                 passenger.addWalletBalance(refundAmount);  // Add to passenger's wallet (if cancellation is involved)
@@ -147,10 +139,11 @@ public class Ride {
             System.out.println("No payment associated with this ride.");
         }
     }
+    
 
     // Method to handle ride cancellation
     public void cancelRide() {
-        if (this.status.equals("Completed")) {
+        if ("Completed".equals(this.status)) {
             System.out.println("Ride already completed, cannot be canceled.");
             return;
         }
@@ -159,7 +152,7 @@ public class Ride {
         System.out.println("Ride " + this.rideID + " has been canceled.");
 
         // If the ride was pre-booked, advance payment is not refunded
-        if (this.isPreBooked) {
+        if ("Scheduled".equals(this.status)) {
             System.out.println("Advance payment for this pre-booked ride will not be refunded.");
         } else {
             // Refund the full payment to the passenger's wallet for normal rides
