@@ -9,7 +9,7 @@ public class Passenger extends User {
 
     public Passenger(String id, String name, String email, String phone, String password) {
         super(id, name, email, phone, password);
-        this.wallet = 0; // Initial wallet balance
+        this.wallet = 1000; // Initial wallet balance
         this.rides = new ArrayList<>();
     }
 
@@ -54,7 +54,7 @@ public class Passenger extends User {
 
         // Create the ride and assign payment strategy
         Ride ride = new Ride("Ride" + (rides.size() + 1), this, driver, pickupLocation, dropoffLocation, fare,
-                estimatedArrivalTime, "In Progress", false);
+                estimatedArrivalTime, "In Progress");
         Payment payment = new Payment("Payment" + (rides.size() + 1), fare, paymentStrategy);
         ride.setPayment(payment);
 
@@ -68,47 +68,50 @@ public class Passenger extends User {
     public void preBookRide(String pickupLocation, String dropoffLocation, Driver driver, double fare,
             int daysInAdvance, PaymentStrategyInterface paymentStrategy) {
 
-        // Determine discount based on days in advance
         double discount = 0;
         if (daysInAdvance == 1) {
-            discount = 0.05; // 5% discount
+            discount = 0.05; // 5% discount for booking 1 day in advance
         } else if (daysInAdvance == 2) {
-            discount = 0.10; // 10% discount
+            discount = 0.10; // 10% discount for booking 2 days in advance
         } else if (daysInAdvance == 3) {
-            discount = 0.15; // 15% discount
+            discount = 0.15; // 15% discount for booking 3 days in advance
         }
+        else {
+            System.out.println("Invalid Number of Booking Days");
+            return;
+        }
+        double finalFare = fare - (fare * discount);
 
-        double finalFare = fare - (fare * discount); // Apply discount
-        double advancePayment = finalFare * 0.05; // 5% advance payment for pre-scheduled rides
+        double advancePayment = finalFare * 0.05;
 
-        // Withdraw the advance payment from wallet
         if (withdraw(advancePayment)) {
-            // Create ride and set payment
-            Ride ride = new Ride("PreScheduledRide" + (rides.size() + 1), this, driver, pickupLocation, dropoffLocation,
-                    finalFare, LocalDateTime.now().plusDays(daysInAdvance), "Scheduled", true);
+            Ride ride = new Ride("PreScheduledRide" + (rides.size() + 1), this, driver, pickupLocation,
+                    dropoffLocation, finalFare, LocalDateTime.now().plusDays(daysInAdvance), "Scheduled");
             Payment payment = new Payment("Payment" + (rides.size() + 1), finalFare, paymentStrategy);
+            paymentStrategy.processPayment(payment, finalFare);
+
             ride.setPayment(payment);
 
-            // Assign ride to passenger and driver
             rides.add(ride);
             driver.assignRide(ride);
             driver.deposit(advancePayment);
 
             System.out.println("Pre-scheduled ride booked successfully with a " + (discount * 100) + "% discount.");
+        } else {
+            System.out.println("Insufficient funds to book the pre-scheduled ride.");
         }
     }
 
     public void cancelPreBookRide(Ride ride) {
-        if (rides.contains(ride) && ride.isPreScheduled()) {
+        if (rides.contains(ride) && ride.getStatus().equals("Scheduled")) {
             double advancePayment = ride.getFare() * 0.05; // 5% advance payment
             deposit(advancePayment); // Refund the advance payment
 
-            // Deduct from the driver's wallet since the ride was canceled
-            ride.getDriver().withdraw(advancePayment); // Return the advance payment to the driver
+            ride.getDriver().withdraw(advancePayment);
             ride.setStatus("Cancelled");
 
-            // Remove from the passenger's ride list
-            rides.remove(ride);
+            System.out.println("Driver Wallet: " + ride.getDriver().getWallet());
+            System.out.println("Passenger Wallet: " + getWallet());
 
             System.out.println("Pre-scheduled ride canceled. Refund issued: " + advancePayment);
         } else {
@@ -117,13 +120,12 @@ public class Passenger extends User {
     }
 
     public void cancelRide(Ride ride) {
-        if (rides.contains(ride) && !ride.isPreScheduled()) {
-
+        if (rides.contains(ride) && !ride.getStatus().equals("Scheduled")) {
             ride.setStatus("Cancelled");
 
             System.out.println("Ride with ID " + ride.getRideID() + " has been cancelled by the passenger.");
         } else {
-            if (ride.isPreScheduled()) {
+            if (ride.getStatus().equals("Scheduled")) {
                 System.out.println("Cannot cancel pre-booked ride. Use cancelPreBookRide instead.");
             } else {
                 System.out.println("Ride not found in passenger's rides.");
@@ -147,6 +149,8 @@ public class Passenger extends User {
                         // Mark ride as completed
                         r.completeRide();
                         r.getDriver().completeRide(ride);
+                        System.out.println("Driver Wallet: " + r.getDriver().getWallet());
+                        System.out.println("Passenger Wallet: " + getWallet());
 
                         System.out.println("Ride " + r.getRideID() + " has been completed.");
                         System.out.println("Payment of " + fare + " has been completed.");
