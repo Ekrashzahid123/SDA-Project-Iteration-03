@@ -11,7 +11,7 @@ public class Driver extends User {
     public Driver(String id, String name, String email, String phone, String password, String currentLocation,
             Vehicle vehicle) {
         super(id, name, email, phone, password);
-        this.wallet = 0; // Initial wallet balance
+        this.wallet = 1000; // Initial wallet balance
         this.assignedRides = new ArrayList<>();
         this.currentLocation = currentLocation;
         this.vehicle = vehicle; // Assign vehicle
@@ -109,7 +109,7 @@ public class Driver extends User {
 
     // Handle cancellation of a pre-scheduled ride and refund of advance payment
     public void cancelPreBookRide(Ride ride) {
-        if (assignedRides.contains(ride) && ride.isPreScheduled()) {
+        if (assignedRides.contains(ride) && ride.getStatus().equals("Scheduled")) {
             double advancePayment = ride.getFare() * 0.05; // 5% advance payment
             withdraw(advancePayment); // Deduct from driver's wallet due to cancellation
             ride.getPassenger().deposit(advancePayment);
@@ -122,13 +122,13 @@ public class Driver extends User {
     }
 
     public void cancelRide(Ride ride) {
-        if (assignedRides.contains(ride) && !ride.isPreScheduled()) {
+        if (assignedRides.contains(ride) && !ride.getStatus().equals("Scheduled")) {
             // Set the ride status to 'Cancelled'
             ride.setStatus("Cancelled");
 
             System.out.println("Ride with ID " + ride.getRideID() + " has been cancelled by the driver.");
         } else {
-            if (ride.isPreScheduled()) {
+            if (ride.getStatus().equals("Scheduled")) {
                 System.out.println("Cannot cancel pre-booked ride. Use cancelPreBookRide instead.");
             } else {
                 System.out.println("Ride not found in driver's assigned rides.");
@@ -160,5 +160,4 @@ public class Driver extends User {
         }
         System.out.println("=====================================");
     }
-
 }
