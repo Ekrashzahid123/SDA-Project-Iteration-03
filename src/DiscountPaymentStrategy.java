@@ -10,7 +10,5 @@ public class DiscountPaymentStrategy implements PaymentStrategyInterface {
     public void processPayment(Payment payment, double amount) {
         double discountedAmount = amount - (amount * discount);
         payment.setAmount(discountedAmount);
-        payment.processPayment();
-        System.out.println("Discounted payment of " + discountedAmount + " processed.");
     }
 }
