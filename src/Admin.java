@@ -27,9 +27,6 @@ public class Admin {
         return instance;
     }
 
-    public Admin() {
-    }
-
     // Accessors
     public String getID() {
         return id;
@@ -84,8 +81,7 @@ public class Admin {
 
                 switch (choice) {
                     case 1: {
-                        System.out.print("Enter user ID: ");
-                        String id = input.nextLine();
+                        String id = "P0" + (passengers.size() + 1);
                         System.out.print("Enter name: ");
                         String name = input.nextLine();
                         System.out.print("Enter email: ");
@@ -96,13 +92,12 @@ public class Admin {
                         String password = input.nextLine();
 
                         User newPassenger = UserFactory.createUser("passenger", id, name, email, phone, password, null);
-                        passengers.add((Passenger) newPassenger); // Casting to Passenger
+                        passengers.add((Passenger) newPassenger);
                         System.out.println("Passenger added successfully!");
                         break;
                     }
                     case 2: {
-                        System.out.print("Enter user ID: ");
-                        String id = input.nextLine();
+                        String id = "D0" + (drivers.size() + 1);
                         System.out.print("Enter name: ");
                         String name = input.nextLine();
                         System.out.print("Enter email: ");
@@ -122,17 +117,16 @@ public class Admin {
                         String licensePlate = input.nextLine();
                         System.out.print("Is vehicle wheelchair accessible? (true/false): ");
                         boolean wheelchairAccessible = input.nextBoolean();
-                        input.nextLine(); // To consume the newline character
+                        input.nextLine();
 
                         Vehicle vehicle = new Vehicle(vehicleID, make, model, licensePlate, wheelchairAccessible);
                         User newDriver = UserFactory.createUser("driver", id, name, email, phone, password, vehicle);
-                        drivers.add((Driver) newDriver); // Casting to Driver
+                        drivers.add((Driver) newDriver);
                         System.out.println("Driver added successfully!");
                         break;
                     }
                     case 3: {
-                        System.out.print("Enter user ID: ");
-                        String id = input.nextLine();
+                        String id = "PW0" + (wheelchairUsers.size() + 1);
                         System.out.print("Enter name: ");
                         String name = input.nextLine();
                         System.out.print("Enter email: ");
@@ -142,15 +136,17 @@ public class Admin {
                         System.out.print("Enter password: ");
                         String password = input.nextLine();
 
-                        User newWheelchairUser = UserFactory.createUser("wheelchair", id, name, email, phone, password,
-                                null);
-                        wheelchairUsers.add((WheelchairUser) newWheelchairUser); // Casting to WheelchairUser
+                        User newWheelchairUser = UserFactory.createUser("wheelchair", id, name, email, phone, password, null);
+                        wheelchairUsers.add((WheelchairUser) newWheelchairUser);
+                        System.out.println("Wheelchair User added successfully!");
                         break;
                     }
                     default:
+                        System.out.println("Invalid choice. Please choose Passenger, Driver or Wheelchair User.");
+                        break;
+                }
+                break;
             }
-        }
-
             case 2: {
                 System.out.println("Which user would you like to remove?");
                 System.out.println("1. Passenger");
@@ -204,22 +200,35 @@ public class Admin {
                 break;
             }
             case 3: {
-                System.out.println("Passengers:");
-                for (Passenger passenger : passengers) {
-                    System.out.println("ID: " + passenger.getID() + ", Name: " + passenger.getName() +
-                            ", Email: " + passenger.getEmail() + ", Phone: " + passenger.getPhone());
+                // Check if there are users before displaying
+                if (passengers.isEmpty()) {
+                    System.out.println("No passengers found.");
+                } else {
+                    System.out.println("Passengers:");
+                    for (Passenger passenger : passengers) {
+                        System.out.println("ID: " + passenger.getID() + ", Name: " + passenger.getName() +
+                                ", Email: " + passenger.getEmail() + ", Phone: " + passenger.getPhone());
+                    }
                 }
 
-                System.out.println("Drivers:");
-                for (Driver driver : drivers) {
-                    System.out.println("ID: " + driver.getID() + ", Name: " + driver.getName() +
-                            ", Email: " + driver.getEmail() + ", Phone: " + driver.getPhone());
+                if (drivers.isEmpty()) {
+                    System.out.println("No drivers found.");
+                } else {
+                    System.out.println("Drivers:");
+                    for (Driver driver : drivers) {
+                        System.out.println("ID: " + driver.getID() + ", Name: " + driver.getName() +
+                                ", Email: " + driver.getEmail() + ", Phone: " + driver.getPhone());
+                    }
                 }
 
-                System.out.println("Wheelchair Users:");
-                for (WheelchairUser wheelchairUser : wheelchairUsers) {
-                    System.out.println("ID: " + wheelchairUser.getID() + ", Name: " + wheelchairUser.getName() +
-                            ", Email: " + wheelchairUser.getEmail() + ", Phone: " + wheelchairUser.getPhone());
+                if (wheelchairUsers.isEmpty()) {
+                    System.out.println("No wheelchair users found.");
+                } else {
+                    System.out.println("Wheelchair Users:");
+                    for (WheelchairUser wheelchairUser : wheelchairUsers) {
+                        System.out.println("ID: " + wheelchairUser.getID() + ", Name: " + wheelchairUser.getName() +
+                                ", Email: " + wheelchairUser.getEmail() + ", Phone: " + wheelchairUser.getPhone());
+                    }
                 }
                 break;
             }
@@ -234,6 +243,16 @@ public class Admin {
     }
 
     public void viewSystemStatistics() {
-        System.out.println("Admin: " + getName() + " is viewing system statistics...");
+        int totalRides = 0;
+        // Counting total rides done by all passengers (assuming each passenger has a getRides() method)
+        for (Passenger passenger : passengers) {
+            totalRides += passenger.getRides().size();
+        }
+
+        System.out.println("System Statistics:");
+        System.out.println("Total Passengers: " + (passengers.isEmpty() ? "No passengers found" : passengers.size()));
+        System.out.println("Total Drivers: " + (drivers.isEmpty() ? "No drivers found" : drivers.size()));
+        System.out.println("Total Wheelchair Users: " + (wheelchairUsers.isEmpty() ? "No wheelchair users found" : wheelchairUsers.size()));
+        System.out.println("Total Rides Done: " + totalRides);
     }
 }
