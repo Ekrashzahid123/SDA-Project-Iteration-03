@@ -1,18 +1,4 @@
-## Getting Started
+This project, SDA Project Iteration 03, is a comprehensive implementation showcasing advanced principles of Java programming. It features modular design, object-oriented principles, and strategy patterns for payment handling. The application includes multiple user roles, such as administrators, passengers, and drivers, and implements diverse payment strategies tailored to different user needs. The codebase is structured for clarity and maintainability, making it an excellent resource for learning and extending Java projects. Additionally, the project is compatible with Visual Studio Code, utilizing standard Java folder structures for easy navigation and management.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
 
-## Folder Structure
 
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
