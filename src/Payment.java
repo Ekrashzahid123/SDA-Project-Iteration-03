@@ -1,13 +1,13 @@
 public class Payment {
     private String paymentID;
     private double amount;
-    private String status;  // "Pending", "Completed"
-    private PaymentStrategyInterface paymentStrategy; // This will be injected
+    private String status; // "Pending", "Completed"
+    private PaymentStrategyInterface paymentStrategy;
 
     public Payment(String paymentID, double amount, PaymentStrategyInterface paymentStrategy) {
         this.paymentID = paymentID;
         this.amount = amount;
-        this.status = "Pending";  // Initial payment status
+        this.status = "Pending";
         this.paymentStrategy = paymentStrategy;
     }
 
@@ -41,15 +41,19 @@ public class Payment {
     public void processPayment() {
         if ("Completed".equals(this.status)) {
             System.out.println("Payment has already been processed.");
-            return; // Prevent reprocessing if already completed
+            return;
+        }
+
+        if (this.amount <= 0) {
+            System.out.println("Invalid payment amount.");
+            return;
         }
 
         paymentStrategy.processPayment(this, amount);
-        this.status = "Completed";  // Set status to completed after processing
+        this.status = "Completed"; // Set status to completed after processing
         System.out.println("Payment of " + amount + " has been completed.");
     }
 
-    // Setter to change strategy dynamically if needed
     public void setPaymentStrategy(PaymentStrategyInterface paymentStrategy) {
         this.paymentStrategy = paymentStrategy;
     }
